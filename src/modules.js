@@ -128,7 +128,6 @@ mainToggle();
 removeEvents();
 editEvents();
 
-
 export {
   displayTodo, editEvents, reassignIndex, removeEvents, deleteTask,
 };
