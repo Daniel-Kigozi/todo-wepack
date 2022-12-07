@@ -1,4 +1,17 @@
+let todoList = [];
 
+const setLocalStorage = (todoList) => {
+  localStorage.setItem('formInputs', JSON.stringify(todoList));
+};
+
+const getLocalStorage = () => {
+  if (localStorage.getItem('formInputs') !== null) {
+    todoList = JSON.parse(localStorage.getItem('formInputs'));
+  } else {
+    todoList = [];
+  }
+  return todoList;
+};
 
 const mainToggle = () => {
   const togle = document.querySelectorAll('.complete');

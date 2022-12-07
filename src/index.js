@@ -1,43 +1,35 @@
+import { getLocalStorage, mainToggle, setLocalStorage } from './complete.js';
+import {
+  displayTodo, editEvents, reassignIndex, removeEvents, deleteTask,
+} from './modules.js';
 import './style.css';
 
 const divContainer = document.querySelector('.books-container');
 const inputDiv = document.querySelector('#title');
 const inputSubmit = document.querySelector('#submit');
 
-let todoList = [];
+let todoList = getLocalStorage() || [];
 
-const setLocalStorage = (todoList) => {
-  localStorage.setItem('formInputs', JSON.stringify(todoList));
-};
+let isEdit = false;
+const editId = null;
+mainToggle();
 
-const getLocalStorage = () => {
-  if (localStorage.getItem('formInputs') !== null) {
-    todoList = JSON.parse(localStorage.getItem('formInputs'));
-  } else {
-    todoList = [];
-  }
-  return todoList;
-};
+setLocalStorage(todoList);
+getLocalStorage();
+displayTodo();
 
-const displayTodo = ({ description, index, completed }) => {
-  const divElement = document.createElement('div');
-  divElement.className = 'first-item';
-  divElement.innerHTML = `
-          <div class="item-details">
-          <input type="checkbox" name="" value="" class="complete"> <h4 class="item-desription">${description}</h4>
-          
-          <i class="fa-solid fa-trash-can" id"${index}"></i>
-          
-          </div>
-                `;
+editEvents();
 
-  return divElement;
-};
+reassignIndex();
+
+removeEvents();
+
+deleteTask();
 
 inputSubmit.addEventListener('click', (e) => {
   e.preventDefault();
   if (inputDiv.value.trim() !== '') {
-    
+    if (isEdit === false) {
       const list = {
         description: inputDiv.value,
         completed: false,
@@ -51,6 +43,28 @@ inputSubmit.addEventListener('click', (e) => {
       todoList.forEach((item) => {
         divContainer.append(displayTodo(item));
       });
-    
+    } else {
+      todoList[editId].description = inputDiv.value;
+      setLocalStorage(todoList);
+      todoList = getLocalStorage();
+      divContainer.innerHTML = '';
+      todoList.forEach((item) => {
+        divContainer.append(displayTodo(item));
+      });
+      isEdit = false;
+    }
+    mainToggle();
+    inputDiv.value = '';
+    removeEvents();
+    editEvents();
   }
-  }); 
+});
+
+todoList = getLocalStorage();
+divContainer.innerHTML = '';
+todoList.forEach((item) => {
+  divContainer.append(displayTodo(item));
+});
+mainToggle();
+removeEvents();
+editEvents();

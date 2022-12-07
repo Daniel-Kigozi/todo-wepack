@@ -128,20 +128,6 @@ mainToggle();
 removeEvents();
 editEvents();
 
-const deleteAllItems = document.querySelector('.clear-data');
-
-deleteAllItems.addEventListener('click', () => {
-  todoList = getLocalStorage();
-  todoList = todoList.filter((item) => item.completed === false);
-  setLocalStorage(todoList);
-  divContainer.innerHTML = '';
-  todoList.forEach((item) => {
-    divContainer.append(displayTodo(item));
-  });
-  mainToggle();
-  removeEvents();
-  editEvents();
-});
 
 export {
   displayTodo, editEvents, reassignIndex, removeEvents, deleteTask,
