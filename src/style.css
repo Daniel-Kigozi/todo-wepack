@@ -1,6 +1,9 @@
 .item-details {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid rgb(236, 236, 246);
+  padding: 5px;
 }
 
 .clear > h3 {
@@ -25,10 +28,40 @@ body {
 
 form {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .button-details {
-  height: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+#completed {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit,
+.delete {
   margin: auto;
-  float: right;
+}
+
+.clear-data {
+  border: 1px solid grey;
+  width: 50%;
+  margin: auto;
+  height: 40px;
+  padding-top: 20px;
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+form > input {
+  width: 45%;
+  height: 30px;
+}
+
+#submit {
+  height: 34px;
+  cursor: pointer;
 }
