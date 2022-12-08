@@ -19,13 +19,15 @@ const displayTodo = ({ description, index, completed }) => {
   divElement.className = 'first-item';
   divElement.innerHTML = `
         <div class="item-details">
+        <span id="completed">
         <input type="checkbox" name="" value="" class="complete" ${completed ? 'checked' : ''}> <h4 class="item-desription">${description}</h4>
         
         <i class="fa-solid fa-trash-can" id"${index}"></i>
-        <div class="button-details">
+        </span>
+        <span class="button-details">
         <button class="edit" id="${index}">edit</button>
         <button type="button" id="${index}" class="delete">del</button>
-        </div>
+        </span>
         </div>
               `;
 
@@ -127,6 +129,21 @@ todoList.forEach((item) => {
 mainToggle();
 removeEvents();
 editEvents();
+
+const deleteAllItems = document.querySelector('.clear-data');
+
+deleteAllItems.addEventListener('click', () => {
+  todoList = getLocalStorage();
+  todoList = todoList.filter((item) => item.completed === false);
+  setLocalStorage(todoList);
+  divContainer.innerHTML = '';
+  todoList.forEach((item) => {
+    divContainer.append(displayTodo(item));
+  });
+  mainToggle();
+  removeEvents();
+  editEvents();
+});
 
 export {
   displayTodo, editEvents, reassignIndex, removeEvents, deleteTask,
